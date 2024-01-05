@@ -17,6 +17,24 @@ const list = [
     points: 5,
     objectID: 1,
   },
+
+  {
+    title: "JavaScript",
+    url: "https://developer.mozilla.org/",
+    author: "Mozilla",
+    num_comments: 102,
+    points: 7,
+    objectID: 2,
+  },
+
+  {
+    title: "MongoDB",
+    url: "https://www.mongodb.com/",
+    author: "Mongo",
+    num_comments: 18,
+    points: 2,
+    objectID: 3,
+  },
 ];
 
 function App() {
@@ -42,6 +60,46 @@ function App() {
             <span>{topic.points}</span>
           </li>
         ))}
+      </ul>
+
+      <h2>Some array methods JS built-in</h2>
+
+      <hr />
+
+      <h3>filter: titles with no. comments smaller than 10 </h3>
+
+      <ul>
+        {list
+          .filter((item) => item.num_comments < 10)
+          .map((item) => (
+            <li key={item.objectID}>{item.title}</li>
+          ))}
+      </ul>
+
+      <h3>reduce: all the points for the titles and all the comments</h3>
+      <ul>
+        {
+          <li>
+            {" "}
+            Total no. of points:
+            {list
+              .map((item) => item.points)
+              .reduce(
+                (accumulator, currentValue) => accumulator + currentValue
+              )}
+          </li>
+        }
+        {
+          <li>
+            {" "}
+            Total no. of comments:
+            {list
+              .map((item) => item.num_comments)
+              .reduce(
+                (accumulator, currentValue) => accumulator + currentValue
+              )}
+          </li>
+        }
       </ul>
     </div>
   );
