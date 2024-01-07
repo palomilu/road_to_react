@@ -42,9 +42,7 @@ function App() {
     <div>
       <h1>My Hacker Stories</h1>
 
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
-
+      <Search />
       <hr />
 
       <h2>Lists in React</h2>
@@ -66,8 +64,15 @@ function App() {
 
       <hr />
 
-      <h3>filter: titles with no. comments smaller than 10 </h3>
+      <List />
+    </div>
+  );
+}
 
+function List() {
+  return (
+    <>
+      <h3>filter: titles with no. comments smaller than 10 </h3>
       <ul>
         {list
           .filter((item) => item.num_comments < 10)
@@ -101,8 +106,17 @@ function App() {
           </li>
         }
       </ul>
-    </div>
+    </>
   );
 }
+
+const Search = () => {
+  return (
+    <>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" />
+    </>
+  );
+};
 
 export default App;
