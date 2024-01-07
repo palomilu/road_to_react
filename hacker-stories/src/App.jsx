@@ -65,6 +65,9 @@ function App() {
       <hr />
 
       <List />
+      <hr />
+      <h3>Here just reusing the List component</h3>
+      <List />
     </div>
   );
 }
