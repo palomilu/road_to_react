@@ -37,89 +37,79 @@ const list = [
   },
 ];
 
-function App() {
-  return (
-    <div>
-      <h1>My Hacker Stories</h1>
+const App = () => (
+  <div>
+    <h1>My Hacker Stories</h1>
 
-      <Search />
-      <hr />
+    <Search />
+    <hr />
 
-      <h2>Lists in React</h2>
+    <h2>Lists in React</h2>
 
-      <ul>
-        {list.map((topic) => (
-          <li key={topic.objectID}>
-            <span>
-              <a href={topic.url}>{topic.title}</a>
-            </span>
-            <span>{topic.author}</span>
-            <span>{topic.num_comments}</span>
-            <span>{topic.points}</span>
-          </li>
+    <ul>
+      {list.map((topic) => (
+        <li key={topic.objectID}>
+          <span>
+            <a href={topic.url}>{topic.title}</a>
+          </span>
+          <span>{topic.author}</span>
+          <span>{topic.num_comments}</span>
+          <span>{topic.points}</span>
+        </li>
+      ))}
+    </ul>
+
+    <h2>Some array methods JS built-in</h2>
+
+    <hr />
+
+    <List />
+    <hr />
+    <h3>Here just reusing the List component</h3>
+    <List />
+  </div>
+);
+
+const List = () => (
+  <>
+    <h3>filter: titles with no. comments smaller than 10 </h3>
+    <ul>
+      {list
+        .filter((item) => item.num_comments < 10)
+        .map((item) => (
+          <li key={item.objectID}>{item.title}</li>
         ))}
-      </ul>
+    </ul>
 
-      <h2>Some array methods JS built-in</h2>
+    <h3>reduce: all the points for the titles and all the comments</h3>
+    <ul>
+      {
+        <li>
+          {" "}
+          Total no. of points:
+          {list
+            .map((item) => item.points)
+            .reduce((accumulator, currentValue) => accumulator + currentValue)}
+        </li>
+      }
+      {
+        <li>
+          {" "}
+          Total no. of comments:
+          {list
+            .map((item) => item.num_comments)
+            .reduce((accumulator, currentValue) => accumulator + currentValue)}
+        </li>
+      }
+    </ul>
+  </>
+);
 
-      <hr />
-
-      <List />
-      <hr />
-      <h3>Here just reusing the List component</h3>
-      <List />
-    </div>
-  );
-}
-
-function List() {
-  return (
-    <>
-      <h3>filter: titles with no. comments smaller than 10 </h3>
-      <ul>
-        {list
-          .filter((item) => item.num_comments < 10)
-          .map((item) => (
-            <li key={item.objectID}>{item.title}</li>
-          ))}
-      </ul>
-
-      <h3>reduce: all the points for the titles and all the comments</h3>
-      <ul>
-        {
-          <li>
-            {" "}
-            Total no. of points:
-            {list
-              .map((item) => item.points)
-              .reduce(
-                (accumulator, currentValue) => accumulator + currentValue
-              )}
-          </li>
-        }
-        {
-          <li>
-            {" "}
-            Total no. of comments:
-            {list
-              .map((item) => item.num_comments)
-              .reduce(
-                (accumulator, currentValue) => accumulator + currentValue
-              )}
-          </li>
-        }
-      </ul>
-    </>
-  );
-}
-
-const Search = () => {
-  return (
-    <>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
-    </>
-  );
-};
+const Search = () => (
+  <>
+    <label htmlFor="search">Search: </label>
+    <input id="search" type="text" />
+  </>
+);
 
 export default App;
