@@ -43,73 +43,23 @@ const App = () => (
 
     <Search />
     <hr />
-
-    <h2>Lists in React</h2>
-
-    <ul>
-      {list.map((topic) => (
-        <li key={topic.objectID}>
-          <span>
-            <a href={topic.url}>{topic.title}</a>
-          </span>
-          <span>{topic.author}</span>
-          <span>{topic.num_comments}</span>
-          <span>{topic.points}</span>
-        </li>
-      ))}
-    </ul>
-
-    <h2>Some array methods JS built-in</h2>
-
-    <hr />
-
-    <List />
-    <hr />
-    <h3>Here just reusing the List component</h3>
-    <List />
   </div>
 );
 
-const List = () => (
-  <>
-    <h3>filter: titles with no. comments smaller than 10 </h3>
-    <ul>
-      {list
-        .filter((item) => item.num_comments < 10)
-        .map((item) => (
-          <li key={item.objectID}>{item.title}</li>
-        ))}
-    </ul>
+const Search = () => {
+  const handleChange = (event) => {
+    //synthetic event
+    console.log(event);
+    // value of target (here: input HTML element)
+    console.log(event.target.value);
+  };
 
-    <h3>reduce: all the points for the titles and all the comments</h3>
-    <ul>
-      {
-        <li>
-          {" "}
-          Total no. of points:
-          {list
-            .map((item) => item.points)
-            .reduce((accumulator, currentValue) => accumulator + currentValue)}
-        </li>
-      }
-      {
-        <li>
-          {" "}
-          Total no. of comments:
-          {list
-            .map((item) => item.num_comments)
-            .reduce((accumulator, currentValue) => accumulator + currentValue)}
-        </li>
-      }
-    </ul>
-  </>
-);
-
-const Search = () => (
-  <>
-    <label htmlFor="search">Search: </label>
-    <input id="search" type="text" />
-  </>
-);
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" onChange={handleChange} />
+    </div>
+  );
+};
 
 export default App;
