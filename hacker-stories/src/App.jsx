@@ -37,15 +37,55 @@ const list = [
   },
 ];
 
-const App = () => (
-  <div>
-    <h1>My Hacker Stories</h1>
+const App = () => {
+  const [text, setText] = React.useState("");
+  const [count, setCount] = React.useState(0);
 
-    <Search />
-    <hr />
-    <List />
-  </div>
-);
+  const handleChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleBlur = (event) => {
+    // React synthetic event
+    console.log(event);
+    // the actual handling
+    console.log("Input field blur (leaving the focus on the input)");
+  };
+
+  const handleClick = (delta) => {
+    setCount(count + delta);
+  };
+
+  return (
+    <div>
+      <h1>My Hacker Stories</h1>
+
+      <Search />
+      <hr />
+      <List />
+      <hr />
+      <div>
+        <input
+          type="text"
+          value={text}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {text}
+      </div>
+      <hr />
+      <div>
+        Count: {count}
+        <button type="button" onClick={() => handleClick(1)}>
+          Increase count
+        </button>
+        <button type="button" onClick={() => handleClick(-1)}>
+          Decrease count
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const Search = () => {
   const handleChange = (event) => {
