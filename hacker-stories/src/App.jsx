@@ -1,5 +1,14 @@
 import * as React from "react";
 
+const styleHeader = {
+  padding: "10px",
+  border: "1px solid black",
+  boxSizing: "border-box",
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+};
+
 const list = [
   {
     title: "React",
@@ -56,6 +65,21 @@ const App = () => {
     setCount(count + delta);
   };
 
+  const [isActive, setActive] = React.useState(false);
+
+  const handleHeaderClick = () => {
+    setActive(true);
+    alert("header click (e.g. navigate to home page)");
+  };
+
+  const handleButtonClick = (event) => {
+    alert("button click (e.g. log out user)");
+
+    if (isActive) {
+      event.stopPropagation();
+    }
+  };
+
   return (
     <div>
       <h1>My Hacker Stories</h1>
@@ -81,6 +105,19 @@ const App = () => {
         </button>
         <button type="button" onClick={() => handleClick(-1)}>
           Decrease count
+        </button>
+      </div>
+      <hr />
+      <div>
+        <div style={styleHeader} onClick={handleHeaderClick}>
+          <div>Header</div>
+          <button type="button" onClick={handleButtonClick}>
+            Log Out
+          </button>
+        </div>
+
+        <button type="button" onClick={() => setActive(!isActive)}>
+          Stop Propagation: {isActive.toString()}
         </button>
       </div>
     </div>
