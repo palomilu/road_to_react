@@ -2,8 +2,7 @@ import * as React from "react";
 
 const App = () => {
 
-  console.log('App renders');
-  const stories = [
+    const stories = [
     {
       title: "React",
       url: "https://reactjs.org/",
@@ -40,34 +39,40 @@ const App = () => {
     },
   ];
 
+  /*
+   * event handler (A) is passed as function to another component -> (B)
+   * event handler is executed in (B) as callback handler (C)
+   * Call back to the place it was introduced (D)
+  */
+
+  // A
+  const handleSearch = (event) => {
+    // D
+    console.log(event.target.value);
+  };
+
   return (
     <div>
       <h1>My Hacker Stories</h1>
 
-      <Search />
+      {/* // B */}
+      <Search onSearch={handleSearch}/>
       <hr />
       <List list={stories} />
      </div>
   );
 };
 
-const Search = () => {
+const Search = (props) => {
 
-  console.log('Search renders');
- 
-  // (1) with this approach, nothing happens on the <p> html element once in Browser
-  // let searchTerm = '';
-
-  // States better
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const handleChange = (event) => {
-
-    // (2) with this approach, nothing happens on the <p> html element once in Browser
-    // searchTerm = event.target.value;
-
-    // (2) State function better
     setSearchTerm(event.target.value);
+
+    // C
+    props.onSearch(event);
+
   };
 
   return (
@@ -86,8 +91,6 @@ const Search = () => {
 
 const List = (props) => { 
   
-  console.log('List renders');
-
   return (
   <ul>
     {props.list.map((item) => (
@@ -99,8 +102,7 @@ const List = (props) => {
 
 const Item = (props) => {
   
-  console.log('Item renders');
-  return (
+    return (
     <li>
       <span>
         <a href={props.item.url}>{props.item.title}</a>
