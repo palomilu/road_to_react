@@ -39,50 +39,40 @@ const App = () => {
     },
   ];
 
-  /*
-   * event handler (A) is passed as function to another component -> (B)
-   * event handler is executed in (B) as callback handler (C)
-   * Call back to the place it was introduced (D)
-  */
+  const [searchTerm, setSearchTerm] = React.useState('');
+  
+  // (1) This was my first solution without using searchTerm
+  // const[filteredStories, setFilteredStories] = React.useState([]);
 
-  // A
   const handleSearch = (event) => {
-    // D
-    console.log(event.target.value);
+
+    // (2) This was my first solution without using searchTerm
+    // setFilteredStories(stories.filter((element) => element.title.toLowerCase().includes(event.target.value.toLowerCase())));
+    setSearchTerm(event.target.value);
   };
+
+  // book's solution
+  const searchedStories = stories.filter((element) => element.title.toLowerCase().includes(searchTerm.toLowerCase())); 
 
   return (
     <div>
       <h1>My Hacker Stories</h1>
 
-      {/* // B */}
-      <Search onSearch={handleSearch}/>
+      <Search onSearch={handleSearch} />
       <hr />
-      <List list={stories} />
+      <List list={searchedStories} />
      </div>
   );
 };
 
 const Search = (props) => {
 
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-
-    // C
-    props.onSearch(event);
-
-  };
 
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} />
+      <input id="search" type="text" onChange={props.onSearch} />
 
-      <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p>
     </div>
   );
 
