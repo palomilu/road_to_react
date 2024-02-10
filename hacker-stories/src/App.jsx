@@ -39,26 +39,24 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  // using this as initial state instead of '' 
+  const [searchTerm, setSearchTerm] = React.useState('React');
   
-  // (1) This was my first solution without using searchTerm
-  // const[filteredStories, setFilteredStories] = React.useState([]);
-
   const handleSearch = (event) => {
 
-    // (2) This was my first solution without using searchTerm
-    // setFilteredStories(stories.filter((element) => element.title.toLowerCase().includes(event.target.value.toLowerCase())));
+ 
     setSearchTerm(event.target.value);
   };
 
-  // book's solution
+
   const searchedStories = stories.filter((element) => element.title.toLowerCase().includes(searchTerm.toLowerCase())); 
 
   return (
     <div>
       <h1>My Hacker Stories</h1>
 
-      <Search onSearch={handleSearch} />
+      { /*Here we pass the state of searchTerm as part of the props */}
+      <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={searchedStories} />
      </div>
@@ -71,7 +69,13 @@ const Search = (props) => {
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={props.onSearch} />
+      { /* ... and here we include it as value so that the real state value is shown */}
+      { /* after doing this, the browser was telling me that I had to decide if I wanted the controlled version now (with refresh)
+         so I did refresh the browser and now 'React' was shown in the input field */}
+
+      { /* IMPORTANT THING HERE: controlled element <input> makes this a controlled component, states (React and HTML states are now synchronised*/}
+
+      <input id="search" type="text" value={props.search} onChange={props.onSearch} />
 
     </div>
   );
