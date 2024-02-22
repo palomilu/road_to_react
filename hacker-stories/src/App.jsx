@@ -39,7 +39,6 @@ const App = () => {
     },
   ];
 
-  // using this as initial state instead of '' 
   const [searchTerm, setSearchTerm] = React.useState('React');
   
   const handleSearch = (event) => {
@@ -54,8 +53,6 @@ const App = () => {
   return (
     <div>
       <h1>My Hacker Stories</h1>
-
-      { /*Here we pass the state of searchTerm as part of the props */}
       <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={searchedStories} />
@@ -63,47 +60,40 @@ const App = () => {
   );
 };
 
-const Search = (props) => {
-
-
-  return (
+// now using object destructuring for the props
+// this instead of:
+// const search = props.search //...
+const Search = ({search, onSearch}) => (
     <div>
       <label htmlFor="search">Search: </label>
-      { /* ... and here we include it as value so that the real state value is shown */}
-      { /* after doing this, the browser was telling me that I had to decide if I wanted the controlled version now (with refresh)
-         so I did refresh the browser and now 'React' was shown in the input field */}
-
-      { /* IMPORTANT THING HERE: controlled element <input> makes this a controlled component, states (React and HTML states are now synchronised*/}
-
-      <input id="search" type="text" value={props.search} onChange={props.onSearch} />
+      <input id="search" type="text" value={search} onChange={onSearch} />
 
     </div>
   );
 
 
-};
 
-const List = (props) => { 
+const List = ({list}) => { 
   
   return (
   <ul>
-    {props.list.map((item) => (
+    {list.map((item) => (
       <Item key={item.objectID} item={item} />
     ))}
   </ul>
 );
 };
 
-const Item = (props) => {
+const Item = ({item}) => {
   
     return (
     <li>
       <span>
-        <a href={props.item.url}>{props.item.title}</a>
+        <a href={item.url}>{item.title}</a>
       </span>
-      <span>{props.item.author}</span>
-      <span>{props.item.num_comments}</span>
-      <span>{props.item.points}</span>
+      <span>{item.author}</span>
+      <span>{item.num_comments}</span>
+      <span>{item.points}</span>
     </li>
   );
 };
