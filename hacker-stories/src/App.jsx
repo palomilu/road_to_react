@@ -39,12 +39,32 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('React');
+  // use the stored value, if a value exists, to set the initial state
+  // of the searchTerm in React's useState Hook
+  // Default value: 'React'
+  const [searchTerm, setSearchTerm] = React.useState(
+   localStorage.getItem('search') ||  'React'
+  );
   
+
+  // THIS is the fix for the side-effect issue
+  // handles the localStorage change centralized and not in a specific handler
+  // each time searchTerm changes, useEffect takes also place
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm);
+  }, [searchTerm]);
+
   const handleSearch = (event) => {
 
  
     setSearchTerm(event.target.value);
+
+    // use local storage to store searchTerm accompanied by
+    // an identifier whenever a user types into the HTML input field
+    // This is the first approach, but this brings side-effects, that is why
+    // this should live outside the handleSearch function
+    // ...
+    //     localStorage.setItem('search', event.target.value);
   };
 
 
