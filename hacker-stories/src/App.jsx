@@ -42,7 +42,8 @@ const App = () => {
   // of the searchTerm in React's useState Hook
   // Default value: 'React'
   const [searchTerm, setSearchTerm] = React.useState(
-    localStorage.getItem("search") || "React"
+    // using now nullish coalescing operator
+    localStorage.getItem("search") ?? "React"
   );
 
   // THIS is the fix for the side-effect issue
