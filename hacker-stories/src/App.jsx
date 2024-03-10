@@ -1,8 +1,7 @@
 import * as React from "react";
 
 const App = () => {
-
-    const stories = [
+  const stories = [
     {
       title: "React",
       url: "https://reactjs.org/",
@@ -43,20 +42,17 @@ const App = () => {
   // of the searchTerm in React's useState Hook
   // Default value: 'React'
   const [searchTerm, setSearchTerm] = React.useState(
-   localStorage.getItem('search') ||  'React'
+    localStorage.getItem("search") || "React"
   );
-  
 
   // THIS is the fix for the side-effect issue
   // handles the localStorage change centralized and not in a specific handler
   // each time searchTerm changes, useEffect takes also place
   React.useEffect(() => {
-    localStorage.setItem('search', searchTerm);
+    localStorage.setItem("search", searchTerm);
   }, [searchTerm]);
 
   const handleSearch = (event) => {
-
- 
     setSearchTerm(event.target.value);
 
     // use local storage to store searchTerm accompanied by
@@ -67,8 +63,9 @@ const App = () => {
     //     localStorage.setItem('search', event.target.value);
   };
 
-
-  const searchedStories = stories.filter((element) => element.title.toLowerCase().includes(searchTerm.toLowerCase())); 
+  const searchedStories = stories.filter((element) =>
+    element.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
@@ -76,37 +73,32 @@ const App = () => {
       <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={searchedStories} />
-     </div>
+    </div>
   );
 };
 
 // now using object destructuring for the props
 // this instead of:
 // const search = props.search //...
-const Search = ({search, onSearch}) => (
-    <div>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" value={search} onChange={onSearch} />
-
-    </div>
-  );
-
-
-
-const List = ({list}) => { 
-  
-  return (
-  <ul>
-    {list.map((item) => (
-      <Item key={item.objectID} item={item} />
-    ))}
-  </ul>
+const Search = ({ search, onSearch }) => (
+  <div>
+    <label htmlFor="search">Search: </label>
+    <input id="search" type="text" value={search} onChange={onSearch} />
+  </div>
 );
+
+const List = ({ list }) => {
+  return (
+    <ul>
+      {list.map((item) => (
+        <Item key={item.objectID} item={item} />
+      ))}
+    </ul>
+  );
 };
 
-const Item = ({item}) => {
-  
-    return (
+const Item = ({ item }) => {
+  return (
     <li>
       <span>
         <a href={item.url}>{item.title}</a>
@@ -117,6 +109,5 @@ const Item = ({item}) => {
     </li>
   );
 };
-
 
 export default App;
