@@ -1,5 +1,26 @@
 import * as React from "react";
 
+/*
+ * with the key in place you can use this new custom hook more than once
+ * in your application. You only need to make sure that the first argument,
+ * the key you are passing in, is a unique identifier which allocates the state
+ * in browser's local storage under a unique key
+ *
+ * Custom hooks start with use...
+ * return arrays
+ */
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) ?? initialState
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
 const App = () => {
   const stories = [
     {
@@ -41,17 +62,7 @@ const App = () => {
   // use the stored value, if a value exists, to set the initial state
   // of the searchTerm in React's useState Hook
   // Default value: 'React'
-  const [searchTerm, setSearchTerm] = React.useState(
-    // using now nullish coalescing operator
-    localStorage.getItem("search") ?? "React"
-  );
-
-  // THIS is the fix for the side-effect issue
-  // handles the localStorage change centralized and not in a specific handler
-  // each time searchTerm changes, useEffect takes also place
-  React.useEffect(() => {
-    localStorage.setItem("search", searchTerm);
-  }, [searchTerm]);
+  const [searchTerm, setSearchTerm] = useStorageState("search", "React");
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
