@@ -1,14 +1,5 @@
 import * as React from "react";
 
-/*
- * with the key in place you can use this new custom hook more than once
- * in your application. You only need to make sure that the first argument,
- * the key you are passing in, is a unique identifier which allocates the state
- * in browser's local storage under a unique key
- *
- * Custom hooks start with use...
- * return arrays
- */
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) ?? initialState
@@ -59,20 +50,10 @@ const App = () => {
     },
   ];
 
-  // use the stored value, if a value exists, to set the initial state
-  // of the searchTerm in React's useState Hook
-  // Default value: 'React'
   const [searchTerm, setSearchTerm] = useStorageState("search", "React");
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-
-    // use local storage to store searchTerm accompanied by
-    // an identifier whenever a user types into the HTML input field
-    // This is the first approach, but this brings side-effects, that is why
-    // this should live outside the handleSearch function
-    // ...
-    //     localStorage.setItem('search', event.target.value);
   };
 
   const searchedStories = stories.filter((element) =>
@@ -89,14 +70,11 @@ const App = () => {
   );
 };
 
-// now using object destructuring for the props
-// this instead of:
-// const search = props.search //...
 const Search = ({ search, onSearch }) => (
-  <div>
+  <>
     <label htmlFor="search">Search: </label>
     <input id="search" type="text" value={search} onChange={onSearch} />
-  </div>
+  </>
 );
 
 const List = ({ list }) => {
