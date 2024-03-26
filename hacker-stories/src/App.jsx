@@ -76,13 +76,13 @@ const App = () => {
 };
 
 // reusable react component for Search alike components
-const InputWithLabel = ({ id, label, value, type = "text", onInputChange }) => {
+const InputWithLabel = ({ id, label, value, type = "text", onInputChange }) => (
   <>
     <label htmlFor={id}>{label}</label>
     &nbsp;
     <input id={id} type={type} value={value} onChange={onInputChange}></input>
-  </>;
-};
+  </>
+);
 
 const List = ({ list }) => {
   return (
