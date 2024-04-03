@@ -71,6 +71,7 @@ const App = () => {
       ></InputWithLabel>
       <hr />
       <List list={searchedStories} />
+      <ButtonInReact id="button" value="button-test"></ButtonInReact>
     </div>
   );
 };
@@ -106,5 +107,20 @@ const Item = ({ item }) => {
     </li>
   );
 };
+
+/*
+ * Components below just thought as playground for this section
+ */
+
+const ButtonInReact = ({
+  id,
+  text = "button",
+  type = "button",
+  onChange = () => console.log("button clicked"),
+}) => (
+  <button id={id} type={type} onClick={onChange}>
+    {text}
+  </button>
+);
 
 export default App;
