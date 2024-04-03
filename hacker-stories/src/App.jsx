@@ -71,7 +71,26 @@ const App = () => {
       ></InputWithLabel>
       <hr />
       <List list={searchedStories} />
-      <ButtonInReact id="button" value="button-test"></ButtonInReact>
+      <ButtonInReact
+        id="button"
+        value="button-test"
+        text="button-test"
+      ></ButtonInReact>
+      <br />
+      <RadioButton
+        id="JavaScript"
+        name="Programming Languages"
+        value="JavaScript"
+        label="Java Script"
+      />
+      <br />
+      <RadioButton id="Python" name="Programming Languages" value="Python" />
+      <hr />
+      <ReactCheckBox id="yes" value="Yes" />
+      <br />
+      <ReactCheckBox id="no" value="No" />
+      <hr />
+      <ReactDropDown list={stories} name="Searched Stories" id="stories" />
     </div>
   );
 };
@@ -121,6 +140,39 @@ const ButtonInReact = ({
   <button id={id} type={type} onClick={onChange}>
     {text}
   </button>
+);
+
+/*
+ * For radio button (input of type radio) I need:
+ * id, name, value
+ * and a label, id is used for
+ */
+
+const RadioButton = ({ id, name = "radio options", value, label }) => (
+  <>
+    <input type="radio" id={id} name={name} value={value} />
+    <label htmlFor={id}>{label ? label : value}</label>
+  </>
+);
+
+// checkbox is similar to radio button
+
+const ReactCheckBox = ({ id, name = "checkbox options", value, label }) => (
+  <>
+    <input type="checkbox" name={name} value={value} />
+    <label htmlFor={id}>{label ? label : value}</label>
+  </>
+);
+
+// dropdown is as select simply select + options
+const ReactDropDown = ({ list, name, id }) => (
+  <select name={name} id={id}>
+    {list.map((item) => (
+      <option key={item.objectID} value={item.title}>
+        {item.author}
+      </option>
+    ))}
+  </select>
 );
 
 export default App;
