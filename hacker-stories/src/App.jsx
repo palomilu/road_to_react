@@ -67,6 +67,7 @@ const App = () => {
         id="search"
         label="Search"
         value={searchTerm}
+        isFocused
         onInputChange={handleSearch}
       >
         <strong>Search:</strong>
@@ -98,17 +99,27 @@ const App = () => {
 };
 
 // reusable react component for Search alike components
+// declarative react Focus
+// NOT using the declarative approach since I don't see it necessary at the moment
+
 const InputWithLabel = ({
   id,
   value,
   type = "text",
   onInputChange,
+  isFocused,
   children,
 }) => (
   <>
     <label htmlFor={id}>{children}</label>
     &nbsp;
-    <input id={id} type={type} value={value} onChange={onInputChange}></input>
+    <input
+      id={id}
+      type={type}
+      value={value}
+      autoFocus={isFocused}
+      onChange={onInputChange}
+    ></input>
   </>
 );
 
