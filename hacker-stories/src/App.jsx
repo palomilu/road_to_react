@@ -13,7 +13,9 @@ const useStorageState = (key, initialState) => {
 };
 
 const App = () => {
-  const stories = [
+  // list of items needs to become a stateful value in order to manimpulate
+
+  const [stories, setStories] = React.useState([
     {
       title: "React",
       url: "https://reactjs.org/",
@@ -48,7 +50,15 @@ const App = () => {
       points: 2,
       objectID: 3,
     },
-  ];
+  ]);
+
+  const handleRemoveStory = (item) => {
+    const newStories = stories.filter(
+      (story) => item.objectID !== story.objectID
+    );
+
+    setStories(newStories);
+  };
 
   const [searchTerm, setSearchTerm] = useStorageState("search", "React");
 
@@ -73,7 +83,7 @@ const App = () => {
         <strong>Search:</strong>
       </InputWithLabel>
       <hr />
-      <List list={searchedStories} />
+      <List list={searchedStories} onRemoveItem={handleRemoveStory} />
       <ButtonInReact
         id="button"
         value="button-test"
@@ -94,6 +104,7 @@ const App = () => {
       <ReactCheckBox id="no" value="No" />
       <hr />
       <ReactDropDown list={stories} name="Searched Stories" id="stories" />
+      <ButtonDelete />
     </div>
   );
 };
@@ -123,17 +134,19 @@ const InputWithLabel = ({
   </>
 );
 
-const List = ({ list }) => {
+const List = ({ list, onRemoveItem }) => {
   return (
     <ul>
       {list.map((item) => (
-        <Item key={item.objectID} item={item} />
+        <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
       ))}
     </ul>
   );
 };
 
-const Item = ({ item }) => {
+// Here at onClick of button is the inline-Handler
+// also called: inline arrow function
+const Item = ({ item, onRemoveItem }) => {
   return (
     <li>
       <span>
@@ -142,6 +155,11 @@ const Item = ({ item }) => {
       <span>{item.author}</span>
       <span>{item.num_comments}</span>
       <span>{item.points}</span>
+      <span>
+        <button type="button" onClick={() => onRemoveItem(item)}>
+          Delete
+        </button>
+      </span>
     </li>
   );
 };
@@ -160,6 +178,14 @@ const ButtonInReact = ({
     {text}
   </button>
 );
+
+/*
+ * Button to delete items of the list
+ */
+
+const ButtonDelete = () => {
+  <button type="">Delete</button>;
+};
 
 /*
  * For radio button (input of type radio) I need:
