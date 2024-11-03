@@ -1,4 +1,6 @@
 import * as React from "react";
+import AddElementToList from "./components/AddElementToList";
+import UpdateElementInList from "./components/UpdateElementInList";
 
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
@@ -105,6 +107,11 @@ const App = () => {
       <hr />
       <ReactDropDown list={stories} name="Searched Stories" id="stories" />
       <ButtonDelete />
+      <hr />
+      <h2>Inline Handlers, manipulatint lists</h2>
+      <h3>adding</h3>
+      <AddElementToList />
+      <UpdateElementInList />
     </div>
   );
 };
